@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Input from './form/Input'
+import SubmitButton from "./form/SubmitButton"
 
 class Signup extends Component {
 	constructor() {
@@ -8,6 +10,7 @@ class Signup extends Component {
 		this.state = {
 			username: '',
 			password: '',
+			password2: '',
 			confirmPassword: '',
 			redirectTo: null
 
@@ -56,44 +59,36 @@ render() {
 		<div className="SignupForm">
 			<h4>Sign up</h4>
 			<form className="form-horizontal">
-				<Input id="username" text="Username" change={this.state.handleChange} />
-				<div className="form-group">
-					<div className="col-1 col-ml-auto">
-						<label className="form-label" htmlFor="username">Username</label>
-					</div>
-					<div className="col-3 col-mr-auto">
-						<input className="form-input"
-							type="text"
-							id="username"
-							name="username"
-							placeholder="Username"
-							value={this.state.username}
-							onChange={this.handleChange}
-						/>
-					</div>
-				</div>
-				<div className="form-group">
-					<div className="col-1 col-ml-auto">
-						<label className="form-label" htmlFor="password">Password: </label>
-					</div>
-					<div className="col-3 col-mr-auto">
-						<input className="form-input"
-							placeholder="password"
-							type="password"
-							name="password"
-							value={this.state.password}
-							onChange={this.handleChange}
-						/>
-					</div>
-				</div>
-				<div className="form-group ">
-					<div className="col-7"></div>
-					<button
-						className="btn btn-primary col-1 col-mr-auto"
-						onClick={this.handleSubmit}
-						type="submit"
-					>Sign up</button>
-				</div>
+				<Input 
+				type="text"
+				id="username" 
+				placeholder="Username" 
+				name="username"
+				value={this.state.username}
+				onChange={this.handleChange} 
+				/>
+				<Input
+				type="text"
+				id="password"
+				placeholder="Password"
+				name="password"
+				value={this.state.password}
+				onChange={this.handleChange}
+				/>
+				<Input
+				type="text"
+				id="password"
+				placeholder="Password"
+				name="password2"
+				value={this.state.password2}
+				onChange={this.handleChange}
+				/>
+				<SubmitButton 
+				className="btn btn-primary col-1 col-mr-auto"
+				onClick={this.handleSubmit}
+				type="submit"
+				text="Sign Up"
+				/>
 			</form>
 		</div>
 
