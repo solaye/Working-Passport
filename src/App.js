@@ -61,16 +61,13 @@ class App extends Component {
         {/* Routes to different components */}
         <Route
           exact path="/"
-          component={Home} />
-        <Route
-          path="/login"
           render={() =>
             <LoginForm
               updateUser={this.updateUser}
             />}
         />
         <Route
-          path="/signup"
+          exact path="/signup"
           render={() =>
             <Signup/>}
         />
