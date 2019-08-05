@@ -28,26 +28,38 @@ class Signup extends Component {
 		console.log(this.state.username)
 		event.preventDefault()
 
-		//request to server to add a new username/password
-		axios.post('/user/', {
-			username: this.state.username,
-			password: this.state.password
-		})
-			.then(response => {
-				console.log(response)
-				if (!response.data.errmsg) {
-					console.log('successful signup')
-					this.setState({ //redirect to login page
-						redirectTo: '/'
-					})
-				} else {
-					console.log('username already taken')
-				}
-			}).catch(error => {
-				console.log('signup error: ')
-				console.log(error)
-
+		if(this.state.username.length === 0 || this.state.password.length === 0 || this.state.password2 === 0){
+			// REMOVE ALERT AND CHANGE TO MODAL
+			window.alert("fill out all fields") 
+		} else if (this.state.password2 !== this.state.password){
+			// REMOVE ALERT AND CHANGE TO MODAL
+			window.alert("passwords don't match")
+		} else if (this.state.password.length < 6 || this.state.password2.length < 6){
+			// REMOVE ALERT AND CHANGE TO MODAL
+			window.alert("make password longer than 6 characters")
+		} else {
+			//request to server to add a new username/password
+			axios.post('/user/', {
+				username: this.state.username,
+				password: this.state.password
 			})
+				.then(response => {
+					console.log(response)
+					if (!response.data.errmsg) {
+						console.log('successful signup')
+						this.setState({ //redirect to login page
+							redirectTo: '/'
+						})
+					} else {
+						console.log('username already taken')
+					}
+				}).catch(error => {
+					console.log('signup error: ')
+					console.log(error)
+	
+				})
+
+		}
 	}
 
 
@@ -68,7 +80,7 @@ render() {
 				onChange={this.handleChange} 
 				/>
 				<Input
-				type="text"
+				type="password"
 				id="password"
 				placeholder="Password"
 				name="password"
@@ -76,7 +88,7 @@ render() {
 				onChange={this.handleChange}
 				/>
 				<Input
-				type="text"
+				type="password"
 				id="password"
 				placeholder="Password"
 				name="password2"
