@@ -12,6 +12,8 @@ class Signup extends Component {
 			password: '',
 			password2: '',
 			confirmPassword: '',
+			message: '',
+			modalDisplay: false,
 			redirectTo: null
 
 		}
@@ -29,14 +31,26 @@ class Signup extends Component {
 		event.preventDefault()
 
 		if(this.state.username.length === 0 || this.state.password.length === 0 || this.state.password2 === 0){
+			this.setState({
+				message: "fill out all fields",
+				modalDisplay: true
+			})
 			// REMOVE ALERT AND CHANGE TO MODAL
-			window.alert("fill out all fields") 
+			window.alert(this.state.message) 
 		} else if (this.state.password2 !== this.state.password){
+			this.setState({
+				message: "passwords don't match",
+				modalDisplay: true
+			})
 			// REMOVE ALERT AND CHANGE TO MODAL
-			window.alert("passwords don't match")
+			window.alert(this.state.message)
 		} else if (this.state.password.length < 6 || this.state.password2.length < 6){
+			this.setState({
+				message: "make password longer than 6 characters",
+				modalDisplay: true
+			})
 			// REMOVE ALERT AND CHANGE TO MODAL
-			window.alert("make password longer than 6 characters")
+			window.alert(this.state.message)
 		} else {
 			//request to server to add a new username/password
 			axios.post('/user/', {
@@ -67,41 +81,64 @@ render() {
 	if (this.state.redirectTo) {
 		return <Redirect to={{ pathname: this.state.redirectTo }} />
 	} else {
+		}
 	return (
-		<div className="SignupForm">
-			<h4>Sign up</h4>
-			<form className="form-horizontal">
-				<Input 
-				type="text"
-				id="username" 
-				placeholder="Username" 
-				name="username"
-				value={this.state.username}
-				onChange={this.handleChange} 
-				/>
-				<Input
-				type="password"
-				id="password"
-				placeholder="Password"
-				name="password"
-				value={this.state.password}
-				onChange={this.handleChange}
-				/>
-				<Input
-				type="password"
-				id="password"
-				placeholder="Password"
-				name="password2"
-				value={this.state.password2}
-				onChange={this.handleChange}
-				/>
-				<SubmitButton 
-				className="btn btn-primary col-1 col-mr-auto"
-				onClick={this.handleSubmit}
-				type="submit"
-				text="Sign Up"
-				/>
-			</form>
+		<div>
+			<div class="modal fade" id="validationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+				</div>
+			</div>
+			</div>
+			<div className="SignupForm">
+				<h4>Sign up</h4>
+				<form className="form-horizontal">
+					<Input 
+					type="text"
+					id="username" 
+					placeholder="Username" 
+					name="username"
+					value={this.state.username}
+					onChange={this.handleChange} 
+					/>
+					<Input
+					type="password"
+					id="password"
+					placeholder="Password"
+					name="password"
+					value={this.state.password}
+					onChange={this.handleChange}
+					/>
+					<h7>Re-Enter Password:</h7>
+					<Input
+					type="password"
+					id="password"
+					placeholder="Password"
+					name="password2"
+					value={this.state.password2}
+					onChange={this.handleChange}
+					/>
+					<SubmitButton 
+					className="btn btn-primary col-1 col-mr-auto"
+					onClick={this.handleSubmit}
+					type="submit"
+					text="Sign Up"
+					/>
+				</form>
+			</div>
 		</div>
 
 	)}
