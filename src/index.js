@@ -8,6 +8,8 @@ import { BrowserRouter } from 'react-router-dom' //don't need to specify localho
 import 'spectre.css/dist/spectre.min.css';
 import 'spectre.css/dist/spectre-icons.css';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 ReactDOM.render(
 	<BrowserRouter>
