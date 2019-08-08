@@ -17,7 +17,7 @@ class Signup extends Component {
 			confirmPassword: '',
 			heading: '',
 			message: '',
-			modalDisplay: true,
+			modalDisplay: false,
 			redirectTo: null
 
 		}
@@ -29,19 +29,18 @@ class Signup extends Component {
 			[event.target.name]: event.target.value
 		})
 	}
-	closeModal = () => {
+	closeModal = event => {
+		event.preventDefault
 		this.setState({
 			modalDisplay: false
 		})
 	}
 	
+	
 	handleSubmit(event) {
 		console.log('sign-up handleSubmit, username: ')
 		console.log(this.state.username)
 		event.preventDefault()
-		this.setState({
-			modalDisplay: true
-		})
 
 		if(this.state.username.length === 0 || this.state.password.length === 0 || this.state.password2 === 0){
 			this.setState({
@@ -53,13 +52,15 @@ class Signup extends Component {
 		} else if (this.state.password2 !== this.state.password){
 			this.setState({
 				message: "passwords don't match",
-				heading: 'PASSWORD ERROR'
+				heading: 'PASSWORD ERROR',
+				modalDisplay: true
 			})
 			// REMOVE ALERT AND CHANGE TO MODAL
 		} else if (this.state.password.length < 6 || this.state.password2.length < 6){
 			this.setState({
 				message: "make password longer than 6 characters",
-				heading: 'PASSWORD ERROR'
+				heading: 'PASSWORD ERROR',
+				modalDisplay: true
 			})
 			// REMOVE ALERT AND CHANGE TO MODAL
 		} else {
@@ -87,6 +88,13 @@ class Signup extends Component {
 		}
 	}
 
+	toggle = event => {
+		event.preventDefault()
+		this.setState({
+			modalDisplay: true
+		})
+	}
+
 
 render() {
 	if (this.state.redirectTo) {
@@ -94,15 +102,16 @@ render() {
 	} else {
 	return (
 		<div>
-			{this.state.modalDisplay ? 
-				<MyModal
+			{/* {this.state.modalDisplay ? 
+				
+				null
+			} */}
+			<MyModal
 				message={this.state.message}
 				heading={this.state.heading} 
 				close={this.closeModal}
 				open={this.state.modalDisplay}
-				/> :
-				null
-			}
+				/> 
 			{/* <Example/> */}
 			<div className="SignupForm">
 				<h4>Sign up</h4>
